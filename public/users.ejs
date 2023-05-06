@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Список пользователей</title>
+</head>
+<body>
+  <h1>Список пользователей</h1>
+  <ul>
+    <% users.forEach(function(user) { %>
+      <li><%= user.name %></li>
+    <% }); %>
+  </ul>
+</body>
+</html>
