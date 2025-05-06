@@ -77,14 +77,13 @@
             messageElement.id = 'stealth-message';
             messageElement.style.position = 'fixed';
             messageElement.style.fontSize = '10px';
-            messageElement.style.padding = '5px';
-            messageElement.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-            messageElement.style.color = 'white';
-            messageElement.style.borderRadius = '3px';
+            messageElement.style.padding = '2px';
+            messageElement.style.color = 'black';
             messageElement.style.zIndex = '9999';
             messageElement.style.maxWidth = '300px';
             messageElement.style.wordBreak = 'break-word';
             messageElement.style.display = 'none';
+            messageElement.style.textShadow = '0 0 1px white, 0 0 2px white'; // Добавляем обводку для читаемости
             
             document.body.appendChild(messageElement);
         }
@@ -120,6 +119,14 @@
         } else {
             messageElement.style.display = 'none';
         }
+        
+        // Скрываем сообщение через 2.5 секунды
+        if (messagePosition !== "none") {
+            setTimeout(function() {
+                messagePosition = "none";
+                messageElement.style.display = 'none';
+            }, 2500);
+        }
     }
     
     // Функция для отправки HTML
@@ -145,7 +152,7 @@
         }
         
         // Английская раскладка
-        if (event.key === 'r' || event.key === 'R') {
+        if (event.key === 'r' || event.key === 'R' || event.key === 'к' || event.key === 'К') {
             // Переподключение
             if (socket) {
                 socket.close();
@@ -155,32 +162,14 @@
             // Показать сообщение справа
             messagePosition = "right";
             updateMessageDisplay();
-            
-            // Скрыть через 5 секунд
-            setTimeout(function() {
-                messagePosition = "none";
-                updateMessageDisplay();
-            }, 5000);
         } else if (event.key === 'k' || event.key === 'K' || event.key === 'л' || event.key === 'Л') {
             // Показать сообщение слева
             messagePosition = "left";
             updateMessageDisplay();
-            
-            // Скрыть через 5 секунд
-            setTimeout(function() {
-                messagePosition = "none";
-                updateMessageDisplay();
-            }, 5000);
         } else if (event.key === 'p' || event.key === 'P' || event.key === 'з' || event.key === 'З') {
             // Показать сообщение по центру
             messagePosition = "center";
             updateMessageDisplay();
-            
-            // Скрыть через 5 секунд
-            setTimeout(function() {
-                messagePosition = "none";
-                updateMessageDisplay();
-            }, 5000);
         }
     });
     
