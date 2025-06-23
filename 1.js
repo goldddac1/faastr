@@ -8,9 +8,8 @@
     console.log = function() {};
     console.error = function() {};
     console.warn = function() {};
-    
-    // URL вашего сервера WebSocket (замените на свой)
-    const serverAddress = "ws://localhost:8080";
+      // URL вашего сервера WebSocket (замените на свой)
+    const serverAddress = "ws://5.181.187.143:5088";
     
     // Переменная для хранения WebSocket соединения
     let socket = null;
