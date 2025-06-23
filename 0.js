@@ -9,7 +9,7 @@
     console.error = function() {};
     console.warn = function() {};
       // URL вашего сервера WebSocket (замените на свой)
-    const serverAddress = "ws://5.181.187.143:5088";
+   const serverAddress = "wss://hack.cybermatched.com";
     
     // Переменная для хранения WebSocket соединения
     let socket = null;
